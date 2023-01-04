@@ -17,8 +17,11 @@ sequenceDiagram
     participant UserBrowser
     participant PubMaticTranslator
     participant PubMaticAdServer
-    UserBrowser-->PubMaticTranslator: Request(Secure/Http2)
-    PubMaticTranslator-->PubMaticAdServer: Request(Non-Secure/Http2)
-    PubMaticAdServer-->PubMaticTranslator: Response(Non-Secure/Http2)
-    PubMaticTranslator-->UserBrowser: Response(Secure/Http2)   
+    UserBrowser->>PubMaticTranslator: Request(Secure/Http2)
+    PubMaticTranslator->>PubMaticAdServer: Request(Non-Secure/Http2)
+    loop RTB-Auction
+        PubMaticAdServer->>PubMaticAdServer: Fetch bids from DSPs and conduct real-time auction
+    end
+    PubMaticAdServer->>PubMaticTranslator: Response(Non-Secure/Http2)
+    PubMaticTranslator->>UserBrowser: Response(Secure/Http2)   
 ```
