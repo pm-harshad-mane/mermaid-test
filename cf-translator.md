@@ -17,11 +17,28 @@ sequenceDiagram
     participant UserBrowser
     participant PubMaticTranslator
     participant PubMaticAdServer
-    UserBrowser->>PubMaticTranslator: Request(Secure/Http2)
-    PubMaticTranslator->>PubMaticAdServer: Request(Non-Secure/Http2)
+    UserBrowser->>PubMaticTranslator: POST-Request(Secure/Http2)
+    PubMaticTranslator->>PubMaticAdServer: POST-Request(Non-Secure/Http2)
     loop RTB-Auction
         PubMaticAdServer->>PubMaticAdServer: Fetch bids from DSPs and conduct real-time auction
     end
     PubMaticAdServer->>PubMaticTranslator: Response(Non-Secure/Http2)
     PubMaticTranslator->>UserBrowser: Response(Secure/Http2)   
+```
+
+```mermaid
+sequenceDiagram
+    participant UserBrowser
+    participant CloudflareTunnel
+    participant PubMaticTranslator
+    participant PubMaticAdServer
+    UserBrowser->>CloudflareTunnel: POST-Request(Secure/Http3)
+    CloudflareTunnel->>PubMaticTranslator: POST-Request(Non-Secure/Http2)
+    PubMaticTranslator->>PubMaticAdServer: POST-Request(Non-Secure/Http2)
+    loop RTB-Auction
+        PubMaticAdServer->>PubMaticAdServer: Fetch bids from DSPs and conduct real-time auction
+    end
+    PubMaticAdServer->>PubMaticTranslator: Response(Non-Secure/Http2)
+    PubMaticTranslator->>CloudflareTunnel: Response(Non-Secure/Http2)
+    CloudflareTunnel->>UserBrowser: Response(Secure/Http3)   
 ```
