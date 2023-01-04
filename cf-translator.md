@@ -11,3 +11,14 @@ sequenceDiagram
     John->>Bob: How about you?
     Bob-->>John: Jolly good!
 ```
+
+```mermaid
+sequenceDiagram
+    participant UserBrowser
+    participant PubMaticTranslator
+    participant PubMaticAdServer
+    UserBrowser-->PubMaticTranslator: Request(Secure/Http2)
+    PubMaticTranslator-->PubMaticAdServer: Request(Non-Secure/Http2)
+    PubMaticAdServer-->PubMaticTranslator: Response(Non-Secure/Http2)
+    PubMaticTranslator-->UserBrowser: Response(Secure/Http2)   
+```
