@@ -28,6 +28,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
+    autonumber
     participant UserBrowser
     participant CloudflareTunnel
     participant PubMaticTranslator
