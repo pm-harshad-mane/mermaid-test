@@ -43,3 +43,21 @@ sequenceDiagram
     PubMaticTranslator->>CloudflareTunnel: Response(Non-Secure/Http2)
     CloudflareTunnel->>UserBrowser: Response(Secure/Http3)   
 ```
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant UserBrowser
+    participant AkamaiTunnel
+    participant PubMaticTranslator
+    participant PubMaticAdServer
+    UserBrowser->>AkamaiTunnel: POST-Request(Secure/Http3)
+    AkamaiTunnel->>PubMaticTranslator: POST-Request(Non-Secure/Http2)
+    PubMaticTranslator->>PubMaticAdServer: POST-Request(Non-Secure/Http2)
+    loop RTB-Auction
+        PubMaticAdServer->>PubMaticAdServer: Fetch bids from DSPs and conduct real-time auction
+    end
+    PubMaticAdServer->>PubMaticTranslator: Response(Non-Secure/Http2)
+    PubMaticTranslator->>AkamaiTunnel: Response(Non-Secure/Http2)
+    AkamaiTunnel->>UserBrowser: Response(Secure/Http3)   
+```
